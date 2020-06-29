@@ -84,8 +84,6 @@
 		C8A72B84249E9AA300B1B660 = {
 			isa = PBXGroup;
 			children = (
-				C8A72BC2249E9E4F00B1B660 /* Item.swift */,
-				C8A72BC4249EAD8700B1B660 /* ItemStore.swift */,
 				C8A72B8F249E9AA300B1B660 /* LootLogger */,
 				C8A72BA6249E9AA600B1B660 /* LootLoggerTests */,
 				C8A72BB1249E9AA600B1B660 /* LootLoggerUITests */,
@@ -106,6 +104,8 @@
 		C8A72B8F249E9AA300B1B660 /* LootLogger */ = {
 			isa = PBXGroup;
 			children = (
+				C8A72BC2249E9E4F00B1B660 /* Item.swift */,
+				C8A72BC4249EAD8700B1B660 /* ItemStore.swift */,
 				C80058A824A179E90091558F /* LootLogger.entitlements */,
 				C8A72B90249E9AA300B1B660 /* AppDelegate.swift */,
 				C8A72B92249E9AA300B1B660 /* SceneDelegate.swift */,

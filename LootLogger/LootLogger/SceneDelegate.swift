@@ -19,8 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         let itemStore = ItemStore()
+        let favStore = ItemStore()
         let itemsController = window!.rootViewController as! ItemsViewController
         itemsController.itemStore = itemStore
+        itemsController.favStore = favStore
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

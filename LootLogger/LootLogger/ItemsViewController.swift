@@ -13,7 +13,10 @@ class ItemsViewController: UITableViewController {
     // Items Store Property
     var itemStore: ItemStore!
     var dummyItem: Item = Item(name: "No Items!", valueInDollars: 0, serialNumber: nil, isFavorite: nil)
-
+    var dummyFav: Item = Item(name: "No favs!", valueInDollars: 0, serialNumber: nil, isFavorite: nil)
+    var favStore: ItemStore!
+    var isShowingFavorites: Bool = false
+    
     // Visual code
     var headerView: UIView! = {
         let view = UIView(frame: .zero)
@@ -37,8 +40,8 @@ class ItemsViewController: UITableViewController {
     let filterButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
-        button.setBackgroundImage(UIImage(systemName: "star.fill"), for: .selected)
+//        button.setBackgroundImage(UIImage(systemName: "star"), for: .normal)
+        button.setImage(UIImage(systemName: "star"), for: .normal)
         return button
     }()
     
@@ -50,6 +53,9 @@ class ItemsViewController: UITableViewController {
         setHeaderView()
         if itemStore.allItems.isEmpty {
             itemStore.allItems.append(dummyItem)
+        }
+        if favStore.allItems.isEmpty {
+            favStore.allItems.append(dummyFav)
         }
   
     }
@@ -88,8 +94,30 @@ class ItemsViewController: UITableViewController {
     }
     
     @objc fileprivate func showFavorites(_ sender: UIButton) {
+        if !isShowingFavorites {
+            filterButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            print("star is filled\n -")
+            favStore.allItems = itemStore.allItems.filter { $0.isFavorite }
+            print(favStore.allItems.count)
+            for item in favStore.allItems {
+                print(item.name)
+            }
+        } else {
+            filterButton.setImage(UIImage(systemName: "star"), for: .normal)
+        }
         
+        //TODO: - Probably I should add a delegate or observer to the favourite properties and see if they change before doing
+        //the re-set i do here of the favStore, because it is essentially wasting resources.
+        
+        
+        
+        isShowingFavorites.toggle()
+
+        self.tableView.reloadData()
     }
+    
+    //TODO: - Last todo, it works, but now i have to ensure deletion and other things. bye
+    
     @objc fileprivate func addNewItem(_ sender: UIButton) {
         print("pepe")
         
@@ -131,7 +159,11 @@ class ItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
        // return itemStore.allItems.isEmpty ? 1 : itemStore.allItems.count
-        return itemStore.allItems.count
+        print(favStore.allItems.count)
+        print("pepe")
+        print(itemStore.allItems.count)
+        return isShowingFavorites ? favStore.allItems.count : itemStore.allItems.count
+        //return isShowingFavorites ? favStore.allItems.count : itemStore.allItems.count
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -139,11 +171,13 @@ class ItemsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         //let cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
+
+        print(indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        let item: Item
-        item = itemStore.allItems[indexPath.row]
+        let item: Item = isShowingFavorites ? favStore.allItems[indexPath.row] : itemStore.allItems[indexPath.row]
+
+        //item = itemStore.allItems[indexPath.row]
         print(item.isFavorite)
         cell.textLabel?.text = item.isFavorite ? ("\(item.name) ⭐️") : item.name
         cell.detailTextLabel?.text = "$\(item.valueInDollars)"
@@ -159,7 +193,9 @@ class ItemsViewController: UITableViewController {
             
             let item = self.itemStore.allItems[indexPath.row]
             item.isFavorite.toggle()
+            
             self.tableView.reloadData()
+            
             completionHandler(true)
         }
         favouriteAction.backgroundColor = .systemPurple
@@ -167,6 +203,8 @@ class ItemsViewController: UITableViewController {
         configuration.performsFirstActionWithFullSwipe = true
         return configuration
     }
+    
+    //TODO: - It's pretty probable that I should use delegate methods here to modify the tableview datasource instead of manually modifying them
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
