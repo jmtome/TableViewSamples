@@ -12,8 +12,8 @@ class ItemsViewController: UITableViewController {
 
     // Items Store Property
     var itemStore: ItemStore!
-    var dummyItem: Item = Item(name: "No Items!", valueInDollars: 0, serialNumber: nil, isFavorite: nil)
-    var dummyFav: Item = Item(name: "No favs!", valueInDollars: 0, serialNumber: nil, isFavorite: nil)
+    var dummyItem: Item = Item(name: "Sesquipedalian MacBook Pro with Psychic Transference", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil)
+    var dummyFav: Item = Item(name: "No favs!", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil)
     var favStore: ItemStore!
     var isShowingFavorites: Bool = false
     
@@ -58,6 +58,10 @@ class ItemsViewController: UITableViewController {
             favStore.allItems.append(dummyFav)
         }
   
+//        tableView.estimatedRowHeight = 65
+        
+        
+        
     }
     
     fileprivate func setHeaderView() {
@@ -156,6 +160,8 @@ class ItemsViewController: UITableViewController {
         return 1
     }
 
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
        // return itemStore.allItems.isEmpty ? 1 : itemStore.allItems.count
@@ -174,13 +180,18 @@ class ItemsViewController: UITableViewController {
         //let cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
 
         print(indexPath)
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         let item: Item = isShowingFavorites ? favStore.allItems[indexPath.row] : itemStore.allItems[indexPath.row]
 
         //item = itemStore.allItems[indexPath.row]
         print(item.isFavorite)
-        cell.textLabel?.text = item.isFavorite ? ("\(item.name) ⭐️") : item.name
-        cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        
+        cell.nameLabel.text = item.isFavorite ? ("\(item.name) ⭐️") : item.name
+        cell.serialNumberLabel.text = item.serialNumber
+        cell.valueLabel.text = "$\(item.valueInDollars)"
+        
+        cell.valueLabel.textColor = item.valueInDollars <= 50 ? #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1) : #colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1)
+        
         return cell
     }
     
@@ -188,6 +199,16 @@ class ItemsViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    // quizas hubiera sido menos costoso utilizar tableview.rowHeight y tableview.estimatedRowHeight en el viewDidLoad en vez de estos metodos delegate.
+    //para que ande el automaticdimension es importante que todos los constraint esten puestos
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
+    }
+
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let favouriteAction = UIContextualAction(style: .normal, title: "⭐️") { (_, _, completionHandler) in
             
