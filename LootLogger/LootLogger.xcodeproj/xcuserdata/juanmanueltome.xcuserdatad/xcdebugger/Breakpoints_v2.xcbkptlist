@@ -193,14 +193,14 @@
             landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "9EBE8BD7-EEAC-48D6-89DD-9DA1659CB814 - 5188e243f0ee7269"
+                  uuid = "9EBE8BD7-EEAC-48D6-89DD-9DA1659CB814 - 6d301e8fbd57e8c9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "LootLogger.SceneDelegate.itemStore.getter : LootLogger.ItemStore"
                   moduleName = "LootLogger"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/juanmanueltome/Desktop/Xcode%20Projects/LootLogger/LootLogger/SceneDelegate.swift"
+                  urlString = "file:///Users/juanmanueltome/Desktop/Xcode%20Projects/LootLogger%20With%20Manual%20Codable/LootLogger/SceneDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
@@ -208,14 +208,14 @@
                   offsetFromSymbolStart = "52">
                </Location>
                <Location
-                  uuid = "9EBE8BD7-EEAC-48D6-89DD-9DA1659CB814 - 4039e1ccc95b9f5e"
+                  uuid = "9EBE8BD7-EEAC-48D6-89DD-9DA1659CB814 - 7c811d0084e205fe"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "LootLogger.SceneDelegate.init() -&gt; LootLogger.SceneDelegate"
                   moduleName = "LootLogger"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/juanmanueltome/Desktop/Xcode%20Projects/LootLogger/LootLogger/SceneDelegate.swift"
+                  urlString = "file:///Users/juanmanueltome/Desktop/Xcode%20Projects/LootLogger%20With%20Manual%20Codable/LootLogger/SceneDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
@@ -239,6 +239,22 @@
             endingLineNumber = "48"
             landmarkName = "sceneWillResignActive(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F2386AF-931C-4C6A-A103-24E21378606F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LootLogger/Item.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "CodingKeys"
+            landmarkType = "13">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
