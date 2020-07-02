@@ -10,8 +10,6 @@ import UIKit
 
 class ItemCell: UITableViewCell {
     
-    
-    
     let nameLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.text = "NameLabel"

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C810B69424AE4A0700004E59 /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810B69324AE4A0700004E59 /* DateViewController.swift */; };
+		C87AA8E224ACE6B4005677D5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87AA8E124ACE6B4005677D5 /* DetailViewController.swift */; };
 		C8A72B91249E9AA300B1B660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A72B90249E9AA300B1B660 /* AppDelegate.swift */; };
 		C8A72B93249E9AA300B1B660 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A72B92249E9AA300B1B660 /* SceneDelegate.swift */; };
 		C8A72B98249E9AA300B1B660 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8A72B96249E9AA300B1B660 /* Main.storyboard */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		C80058A824A179E90091558F /* LootLogger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LootLogger.entitlements; sourceTree = "<group>"; };
+		C810B69324AE4A0700004E59 /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
+		C87AA8E124ACE6B4005677D5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C8A72B8D249E9AA300B1B660 /* LootLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LootLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A72B90249E9AA300B1B660 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8A72B92249E9AA300B1B660 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				C8A72B90249E9AA300B1B660 /* AppDelegate.swift */,
 				C8A72B92249E9AA300B1B660 /* SceneDelegate.swift */,
 				C8A72BC0249E9D4E00B1B660 /* ItemsViewController.swift */,
+				C87AA8E124ACE6B4005677D5 /* DetailViewController.swift */,
+				C810B69324AE4A0700004E59 /* DateViewController.swift */,
 				C8F42D5124AC2062006FDE7B /* Item-Cell.swift */,
 				C8A72B96249E9AA300B1B660 /* Main.storyboard */,
 				C8A72B99249E9AA600B1B660 /* Assets.xcassets */,
@@ -202,7 +208,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Juan Manuel Tome";
 				TargetAttributes = {
 					C8A72B8C249E9AA300B1B660 = {
@@ -270,12 +276,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C810B69424AE4A0700004E59 /* DateViewController.swift in Sources */,
 				C8F42D5224AC2062006FDE7B /* Item-Cell.swift in Sources */,
 				C8A72BC3249E9E4F00B1B660 /* Item.swift in Sources */,
 				C8A72BC1249E9D4E00B1B660 /* ItemsViewController.swift in Sources */,
 				C8A72B91249E9AA300B1B660 /* AppDelegate.swift in Sources */,
 				C8A72BC5249EAD8700B1B660 /* ItemStore.swift in Sources */,
 				C8A72B93249E9AA300B1B660 /* SceneDelegate.swift in Sources */,
+				C87AA8E224ACE6B4005677D5 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +364,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -416,6 +425,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -451,7 +461,7 @@
 				CODE_SIGN_ENTITLEMENTS = LootLogger/LootLogger.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YBSZVA7CYQ;
 				INFOPLIST_FILE = LootLogger/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -473,7 +483,7 @@
 				CODE_SIGN_ENTITLEMENTS = LootLogger/LootLogger.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YBSZVA7CYQ;
 				INFOPLIST_FILE = LootLogger/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (

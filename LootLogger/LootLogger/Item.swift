@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Item: Equatable {
+class Item: Equatable, Codable {
     static func == (lhs: Item, rhs: Item) -> Bool {
         return lhs.name == rhs.name && lhs.valueInDollars == rhs.valueInDollars && lhs.serialNumber == rhs.serialNumber && lhs.dateCreated == rhs.dateCreated
     }
@@ -19,11 +19,11 @@ class Item: Equatable {
     var dateCreated: Date
     var isFavorite: Bool
     
-    init(name: String, valueInDollars: Int, serialNumber: String?, isFavorite: Bool?) {
+    init(name: String, valueInDollars: Int, serialNumber: String?, isFavorite: Bool?, date: Date?) {
         self.name = name
         self.valueInDollars = valueInDollars
         self.serialNumber = serialNumber
-        self.dateCreated = Date()
+        self.dateCreated = date ?? Date()
         self.isFavorite = isFavorite ?? false
     }
     
@@ -39,10 +39,10 @@ class Item: Equatable {
             let randomSerialNumber = UUID().uuidString.components(separatedBy: "-").first!
             let isFavorite = Bool.random()
             
-            self.init(name: randomName, valueInDollars: randomValue, serialNumber: randomSerialNumber, isFavorite: isFavorite)
+            self.init(name: randomName, valueInDollars: randomValue, serialNumber: randomSerialNumber, isFavorite: isFavorite, date: nil)
             
         } else {
-            self.init(name: "", valueInDollars: 0, serialNumber: nil, isFavorite: nil)
+            self.init(name: "", valueInDollars: 0, serialNumber: nil, isFavorite: nil, date: nil)
         }
     }
 

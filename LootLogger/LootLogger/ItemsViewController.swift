@@ -12,8 +12,8 @@ class ItemsViewController: UITableViewController {
 
     // Items Store Property
     var itemStore: ItemStore!
-    var dummyItem: Item = Item(name: "Sesquipedalian MacBook Pro with Psychic Transference", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil)
-    var dummyFav: Item = Item(name: "No favs!", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil)
+    var dummyItem: Item = Item(name: "Sesquipedalian MacBook Pro with Psychic Transference", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil, date: nil)
+    var dummyFav: Item = Item(name: "No favs!", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil, date: nil)
     var favStore: ItemStore!
     var isShowingFavorites: Bool = false
     
@@ -45,12 +45,21 @@ class ItemsViewController: UITableViewController {
         return button
     }()
     
-    
+    override func loadView() {
+        super.loadView()
+        
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewItem(_:))),UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(showFavorites(_:)))]
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        navigationItem.title = "Loot Logger"
+
+    }
 
     // View Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setHeaderView()
+        //setHeaderView()
+        
         if itemStore.allItems.isEmpty {
             itemStore.allItems.append(dummyItem)
         }
@@ -58,13 +67,16 @@ class ItemsViewController: UITableViewController {
             favStore.allItems.append(dummyFav)
         }
   
-//        tableView.estimatedRowHeight = 65
-        
         
         
     }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        navigationItem.leftBarButtonItem = editButtonItem
+//    }
+    // init from coder is used when coming from a storyboard, but I think in this cases i could do without it because my code was mostly done in code, i should be able to put it in loadView or viewdidload
     
-    fileprivate func setHeaderView() {
+    fileprivate func setHeaderView() { //this method got deprecated when I added a navigationcontroller, but the code is still useful for the future
         
         // add headerView to tableView's header view
         tableView.tableHeaderView = headerView
@@ -89,7 +101,7 @@ class ItemsViewController: UITableViewController {
         headerView.addSubview(editButton)
         editButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
         editButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20).isActive = true
-        editButton.addTarget(self, action: #selector(toggleEditingMode(_:)), for: .touchUpInside)
+        //editButton.addTarget(self, action: #selector(toggleEditingMode(_:)), for: .touchUpInside)
         //add favorites button
         headerView.addSubview(filterButton)
         filterButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
@@ -99,7 +111,8 @@ class ItemsViewController: UITableViewController {
     
     @objc fileprivate func showFavorites(_ sender: UIButton) {
         if !isShowingFavorites {
-            filterButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            //filterButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            
             print("star is filled\n -")
             favStore.allItems = itemStore.allItems.filter { $0.isFavorite }
             print(favStore.allItems.count)
@@ -122,7 +135,7 @@ class ItemsViewController: UITableViewController {
     
     //TODO: - Last todo, it works, but now i have to ensure deletion and other things. bye
     
-    @objc fileprivate func addNewItem(_ sender: UIButton) {
+    @objc fileprivate func addNewItem(_ sender: UIBarButtonItem) {
         print("pepe")
         
         
@@ -143,15 +156,15 @@ class ItemsViewController: UITableViewController {
         
     }
     
-    @objc fileprivate func toggleEditingMode(_ sender: UIButton) {
-        if isEditing {
-            sender.setTitle("Edit", for: .normal)
-            setEditing(false, animated: true)
-        } else {
-            sender.setTitle("Done", for: .normal)
-            setEditing(true, animated: true)
-        }
-    }
+//    @objc fileprivate func toggleEditingMode(_ sender: UIButton) {
+//        if isEditing {
+//            sender.setTitle("Edit", for: .normal)
+//            setEditing(false, animated: true)
+//        } else {
+//            sender.setTitle("Done", for: .normal)
+//            setEditing(true, animated: true)
+//        }
+//    }
 
     // MARK: - Table view data source
 
@@ -285,14 +298,33 @@ class ItemsViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        switch segue.identifier {
+        case "showItem":
+        if let row = tableView.indexPathForSelectedRow?.row {
+            let item = itemStore.allItems[row]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.item = item
+        }
+        default:
+            preconditionFailure("Unexpected Segue Identifier")
+        }
     }
-    */
+    //Aparentemente usando segues de este modo, al pasar el item, si yo luego hago viewWillDisappear en el vc presentado, al modificar item lo modifica en el parent vc... nose pq
+    //tendra que ver con que el dato esta en un itemstore?, nose.. quiza esta referenciando a ello
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+
+        tableView.reloadData()
+    }
+    
 
 }
