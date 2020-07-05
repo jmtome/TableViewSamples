@@ -13,7 +13,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    
     let itemStore = ItemStore()
+    let imageStore = ImageStore()
     let favStore = ItemStore()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-        
+        window?.tintColor = UIColor(named: "Brand Accent Color")
         
         //let itemsController = window!.rootViewController as! ItemsViewController
         // this commented code is from before UINavigationController
@@ -30,6 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let itemsController = navController.topViewController as! ItemsViewController
         itemsController.itemStore = itemStore
         itemsController.favStore = favStore
+        itemsController.imageStore = imageStore
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

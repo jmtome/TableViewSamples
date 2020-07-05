@@ -18,6 +18,7 @@ class Item: Equatable, Codable {
     var serialNumber: String?
     var dateCreated: Date
     var isFavorite: Bool
+    var itemKey: String
     
     init(name: String, valueInDollars: Int, serialNumber: String?, isFavorite: Bool?, date: Date?) {
         self.name = name
@@ -25,6 +26,7 @@ class Item: Equatable, Codable {
         self.serialNumber = serialNumber
         self.dateCreated = date ?? Date()
         self.isFavorite = isFavorite ?? false
+        self.itemKey = UUID().uuidString
     }
     
     convenience init(random: Bool = false) {

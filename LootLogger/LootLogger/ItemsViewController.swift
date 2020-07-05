@@ -12,6 +12,8 @@ class ItemsViewController: UITableViewController {
 
     // Items Store Property
     var itemStore: ItemStore!
+    var imageStore: ImageStore!
+    
     var dummyItem: Item = Item(name: "Sesquipedalian MacBook Pro with Psychic Transference", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil, date: nil)
     var dummyFav: Item = Item(name: "No favs!", valueInDollars: 0, serialNumber: "No Serial!", isFavorite: nil, date: nil)
     var favStore: ItemStore!
@@ -52,6 +54,8 @@ class ItemsViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         navigationItem.title = "Loot Logger"
+        tableView.backgroundColor = UIColor(named: "Primary Brand Fill Color")
+        navigationController?.navigationBar.barTintColor = UIColor(named: "Secondary Brand Fill Color")
 
     }
 
@@ -113,6 +117,9 @@ class ItemsViewController: UITableViewController {
         if !isShowingFavorites {
             //filterButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             
+            
+            navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewItem(_:))),UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(showFavorites(_:)))]
+            
             print("star is filled\n -")
             favStore.allItems = itemStore.allItems.filter { $0.isFavorite }
             print(favStore.allItems.count)
@@ -120,7 +127,7 @@ class ItemsViewController: UITableViewController {
                 print(item.name)
             }
         } else {
-            filterButton.setImage(UIImage(systemName: "star"), for: .normal)
+            navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewItem(_:))),UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(showFavorites(_:)))]
         }
         
         //TODO: - Probably I should add a delegate or observer to the favourite properties and see if they change before doing
@@ -188,7 +195,9 @@ class ItemsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return !(itemStore.allItems[0] == dummyItem)
     }
+    //MARK: - Divider
     
+    //MARK: Label
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
 
@@ -204,7 +213,7 @@ class ItemsViewController: UITableViewController {
         cell.valueLabel.text = "$\(item.valueInDollars)"
         
         cell.valueLabel.textColor = item.valueInDollars <= 50 ? #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1) : #colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1)
-        
+        //cell.backgroundColor = UIColor(named: "Primary Brand Fill Color")
         return cell
     }
     
@@ -244,7 +253,10 @@ class ItemsViewController: UITableViewController {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
 
             // 1. remove object from your array
-            self.itemStore.allItems.remove(at: indexPath.row)
+            //self.itemStore.allItems.remove(at: indexPath.row)
+            let item = self.itemStore.allItems[indexPath.row]
+            self.itemStore.removeItem(item)
+            self.imageStore.deleteImage(forKey: item.itemKey)
             // 2. reload the table, otherwise you get an index out of bounds crash
             //self.tableView.reloadData()
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -311,6 +323,7 @@ class ItemsViewController: UITableViewController {
             let item = itemStore.allItems[row]
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.item = item
+            detailViewController.imageStore = imageStore
         }
         default:
             preconditionFailure("Unexpected Segue Identifier")

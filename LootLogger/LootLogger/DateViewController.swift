@@ -38,6 +38,7 @@ class DateViewController: UIViewController {
         super.viewWillAppear(animated)
         dateLabel.text = "\(item.dateCreated)"
         datePicker.date = item.dateCreated
+        self.view.backgroundColor = .systemBackground
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -54,10 +55,11 @@ class DateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(datePicker)
+        //dateLabel.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+//        rootView.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
         datePicker.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         datePicker.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         datePicker.addTarget(self, action: #selector(didChangeDatePicker(_:)), for: .valueChanged)
-        self.view.backgroundColor = .white
         self.view.addSubview(dateLabel)
         dateLabel.centerXAnchor.constraint(equalTo: datePicker.centerXAnchor).isActive = true
         dateLabel.centerYAnchor.constraint(equalTo: datePicker.centerYAnchor, constant: -100).isActive = true

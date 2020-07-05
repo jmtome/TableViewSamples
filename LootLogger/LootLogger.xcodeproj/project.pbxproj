@@ -19,6 +19,7 @@
 		C8A72BC1249E9D4E00B1B660 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A72BC0249E9D4E00B1B660 /* ItemsViewController.swift */; };
 		C8A72BC3249E9E4F00B1B660 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A72BC2249E9E4F00B1B660 /* Item.swift */; };
 		C8A72BC5249EAD8700B1B660 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A72BC4249EAD8700B1B660 /* ItemStore.swift */; };
+		C8F2557A24B1335100102312 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F2557924B1335100102312 /* ImageStore.swift */; };
 		C8F42D5224AC2062006FDE7B /* Item-Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F42D5124AC2062006FDE7B /* Item-Cell.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		C8A72BC0249E9D4E00B1B660 /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		C8A72BC2249E9E4F00B1B660 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		C8A72BC4249EAD8700B1B660 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
+		C8F2557924B1335100102312 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		C8F42D5124AC2062006FDE7B /* Item-Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item-Cell.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +119,7 @@
 				C8A72B92249E9AA300B1B660 /* SceneDelegate.swift */,
 				C8A72BC0249E9D4E00B1B660 /* ItemsViewController.swift */,
 				C87AA8E124ACE6B4005677D5 /* DetailViewController.swift */,
+				C8F2557924B1335100102312 /* ImageStore.swift */,
 				C810B69324AE4A0700004E59 /* DateViewController.swift */,
 				C8F42D5124AC2062006FDE7B /* Item-Cell.swift */,
 				C8A72B96249E9AA300B1B660 /* Main.storyboard */,
@@ -281,6 +284,7 @@
 				C8A72BC3249E9E4F00B1B660 /* Item.swift in Sources */,
 				C8A72BC1249E9D4E00B1B660 /* ItemsViewController.swift in Sources */,
 				C8A72B91249E9AA300B1B660 /* AppDelegate.swift in Sources */,
+				C8F2557A24B1335100102312 /* ImageStore.swift in Sources */,
 				C8A72BC5249EAD8700B1B660 /* ItemStore.swift in Sources */,
 				C8A72B93249E9AA300B1B660 /* SceneDelegate.swift in Sources */,
 				C87AA8E224ACE6B4005677D5 /* DetailViewController.swift in Sources */,

@@ -108,6 +108,13 @@ class DetailViewController: UIViewController {
         return button
     }()
     
+    //UIToolbar
+    let bottomToolbar: UIToolbar = {
+        let toolbar = UIToolbar(frame: .zero)
+        //toolbar.barStyle = .default
+
+        return toolbar
+    }()
     
     
     
@@ -117,6 +124,8 @@ class DetailViewController: UIViewController {
             navigationItem.title = item.name
         }
     }
+    var imageStore: ImageStore!
+    
     
     
     override func loadView() {
@@ -132,6 +141,12 @@ class DetailViewController: UIViewController {
         serialTextField.text = item.serialNumber
         valueTextField.text = "\(item.valueInDollars)"
         dateLabel.text = "\(item.dateCreated)"
+        
+        let key = item.itemKey
+        
+        //if there is an associated image with the itemkey, display that image
+        let imageToDisplay = imageStore.image(forKey: key)
+        imageView.image = imageToDisplay
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -181,6 +196,15 @@ class DetailViewController: UIViewController {
         self.view.addConstraint(constraint2)
 
     }
+    let imageView: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "star.fill"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.setContentHuggingPriority(UILayoutPriority(rawValue: 248), for: .vertical)
+        image.setContentCompressionResistancePriority(UILayoutPriority(749), for: .vertical)
+        image.contentMode = .scaleAspectFit
+        return image
+        
+    }()
     
     fileprivate func setupMainStackView() {
         
@@ -193,25 +217,99 @@ class DetailViewController: UIViewController {
         mainStackView.addArrangedSubview(valueStackView)
         mainStackView.addArrangedSubview(dateLabel)
         mainStackView.addArrangedSubview(changeDateButton)
+        mainStackView.addArrangedSubview(imageView)
+        
+//        imageView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor).isActive = true
+//        imageView.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor).isActive = true
+//        imageView.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: -8).isActive = true
+//
+        
+        //self.view.addSubview(bottomToolbar)
         changeDateButton.addTarget(self, action: #selector(showDatePicker(_:)), for: .touchUpInside)
         
         //Autolayout constraints for the main stack view to its superView
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         mainStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant:  8).isActive = true
-        mainStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
         mainStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
-        
+        mainStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
         setupCrossedConstraints()
         
+        //let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        //there is a bug in uikit with uitoolbar that apparently if you dont setup the toolbar with a frame of at least 40x30
+        // then there will be autolayout issues...
+
+        //let camera = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(addPhoto))
+        //let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        
+//        toolbar.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(toolbar)
+//        toolbar.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,constant: -50).isActive = true
+//        toolbar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+//        toolbar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//        mainStackView.bottomAnchor.constraint(equalTo: toolbar.topAnchor).isActive = true
+//        //toolbar.topAnchor.constraint(equalTo: mainStackView.bottomAnchor).isActive = true
+//        //this top anchor isnt necessary, for it is the same as the bottom anchor from the stackview
+//        toolbar.setItems([camera], animated: true)
+        
+        
+    }
+    
+    @objc fileprivate func imagePicker(for sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.delegate = self
+        //imagePicker.allowsEditing = true
+        //imagePicker.showsCameraControls = true
+        imagePicker.setEditing(true, animated: true)
+        
+        
+        return imagePicker
     }
     
     @objc fileprivate func showDatePicker(_ sender: UIButton) {
         let vc = DateViewController()
         
         vc.item = self.item
-        
+        //self.modalPresentationStyle = .fullScreen
+        self.definesPresentationContext = true
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc fileprivate func addPhoto(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = sender
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+                let imagePicker = self.imagePicker(for: .camera)
+                self.present(imagePicker,animated: true, completion: nil)
+
+            }
+            alertController.addAction(cameraAction)
+            
+        }
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            let imagePicker = self.imagePicker(for: .photoLibrary)
+            imagePicker.modalPresentationStyle = .popover
+            imagePicker.popoverPresentationController?.barButtonItem = sender 
+            self.present(imagePicker,animated: true, completion: nil)
+            
+            
+        }
+        alertController.addAction(photoLibraryAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            print("cancel")
+        }
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+        //using animated: true triggers a uikit bug about a constraint, its a bug, so its not important,
+        //see https://stackoverflow.com/questions/55653187/swift-default-alertviewcontroller-breaking-constraints
+        //for further info
+        
+        
+        
     }
     
     override func viewDidLoad() {
@@ -220,12 +318,32 @@ class DetailViewController: UIViewController {
         serialTextField.delegate = self
         valueTextField.delegate = self
         
+        nameTextField.backgroundColor = .tertiarySystemFill
+        serialTextField.backgroundColor = .tertiarySystemFill
+        valueTextField.backgroundColor = .tertiarySystemFill
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped(_:)))
         self.view.addGestureRecognizer(tap)
-        
+        let camera = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(addPhoto(_:)))
+        let delete = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(removeImage(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+
+        toolbarItems = [camera,spacer, delete]
+        navigationController?.setToolbarHidden(false, animated: false)
+        navigationController?.toolbar.barStyle = .default
+
+        //creo que lo mas coeherente es usar la propiedad toolbaraitems de el toolbar de el nav controller...
+        //nose porque el libro hace hacerlo a mano
         
     }
     
+    @objc private func removeImage(_ sender: UIBarButtonItem) {
+        let key = item.itemKey
+        
+        imageView.image = nil
+        imageStore.deleteImage(forKey: key)
+        
+    }
 
     
     @objc fileprivate func backgroundTapped(_ sender: UITapGestureRecognizer) {
@@ -250,3 +368,15 @@ extension DetailViewController: UITextFieldDelegate {
         return true
     }
 }
+
+extension DetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as! UIImage
+        imageStore.setImage(image, forkey: item.itemKey)
+        imageView.image = image
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+//TODO: - add button to remove image

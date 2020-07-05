@@ -71,13 +71,13 @@ class ItemCell: UITableViewCell {
         valueLabel.trailingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         valueLabel.centerYAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.centerYAnchor).isActive = true
         
-        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupLabels()
-
+        self.backgroundColor = UIColor(named: "Primary Brand Fill Color")
+        //apparently the backgroundcolor is on the self and not on the contentview...
     }
     
 }
